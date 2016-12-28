@@ -20,3 +20,16 @@ class CrowdFundingPostProposal(models.Model):
 
     def __str__(self):
         return self.title
+
+class CrowdFundingProposalLike(models.Model):
+    user = models.ForeignKey('auth.User')
+    cfproposal_id = models.ForeignKey(CrowdFundingPostProposal, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    likes = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.user
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
