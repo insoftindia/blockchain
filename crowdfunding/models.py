@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils import timezone
-
+# from vote.managers import VotableManager
 
 class CrowdFundingPostProposal(models.Model):
+
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     text = models.TextField()
@@ -21,15 +22,16 @@ class CrowdFundingPostProposal(models.Model):
     def __str__(self):
         return self.title
 
-class CrowdFundingProposalLike(models.Model):
-    user = models.ForeignKey('auth.User')
-    cfproposal_id = models.ForeignKey(CrowdFundingPostProposal, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-    likes = models.PositiveIntegerField(default=0)
 
-    def __str__(self):
-        return self.user
+class CrowdFundingProposalVoting(models.Model):
+    UP = 'UP'
+    DOWN = 'DN'
+    VOTE_TYPE = [(UP, "Upvote"), (DOWN, "DownVote")]
+    author = models.ForeignKey('auth.User')
+    created_datetime = models.DateTimeField(
+            default=timezone.now)
+    vote_type = models.CharField(max_length=2,
+        choices=VOTE_TYPE, blank=True
 
-    @property
-    def total_likes(self):
-        return self.likes.count()
+    )
+    proposal_id = models.ForeignKey(CrowdFundingPostProposal, models.SET_NULL, blank=True, null=True)

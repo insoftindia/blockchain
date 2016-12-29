@@ -25,9 +25,19 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <p>{{ post.text|linebreaksbr }}</p>
             </div>
+
+                <button type="button"
+                        id="VoteBtn"
+                        class="btn btn-success fa fa-thumbs-o-up"a
+                        data-loading-text=" ... " data-post-id="{{ post.id }}">
+                    {{ upvote }}</button>
+                <button type="button" id="VoteBtnDown" class="btn btn-success fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                    {{ downvote }}</button>
+
         </div>
     </div>
 </article>
+
 <hr>
 {% endblock %}
 
