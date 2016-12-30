@@ -1,5 +1,6 @@
 {% extends 'crowdfunding/index.html' %}
 
+{% load staticfiles %}
 {% block header %}
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
@@ -18,6 +19,11 @@
 </header>
 {% endblock %}
 
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/proposal_list_and_new.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 
 <a id="post-proposal-button" title="Post Proposal!" data-toggle="modal" data-target="#post-proposal"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
@@ -32,18 +38,37 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Create Crowdfunding</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body color-gray">
+                    <div class="form-group row">
+                        <label for="group-type" class="col-xs-4 col-form-label">Group</label>
+                        <div class="col-xs-8">
+                            <div class="form-group">
+                                <select class="form-control" name="group_type" id="group-type">
+                                    {% for g in group_type %}
+                                        <option value="{{ g }}">{{ g }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="group-total-amount-input" class="col-xs-4 col-form-label">Group Total Amt</label>
+                        <div class="col-xs-8">
+                            <input class="form-control" type="number" name="group_total_amount" id="group-total-amount-input" readonly>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label for="title-input" class="col-xs-4 col-form-label">Title</label>
                         <div class="col-xs-8">
                             <input class="form-control" type="text" name="title" id="title-input">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row m-b-30">
                         <label for="amount-input" class="col-xs-4 col-form-label">Amount</label>
                         <div class="col-xs-8">
                             <input class="form-control" type="number" name="amount" id="amount-input">
                         </div>
+                        <div class="amount-warning-msg text-danger" style="display: none;">Sorry, proposal amount is greater than group total amount</div>
                     </div>
                     <div class="form-group row">
                         <label for="end-date-input" class="col-xs-4 col-form-label">End Date</label>
@@ -54,12 +79,12 @@
                     <div class="form-group row">
                         <label for="text-input" class="col-xs-4 col-form-label">Text</label>
                         <div class="col-xs-8">
-                            <input class="form-control" type="text" name="text" id="text-input">
+                            <textarea class="form-control" name="text" id="text-input"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="type" value="post-proposal" class="btn btn-default">Post</button>
+                    <button type="submit" name="type" value="post-proposal" class="btn btn-default btn-align-submit" id="proposal-post">Post</button>
                 </div>
             </div>
         </div>
@@ -82,11 +107,52 @@
                 <hr/>
             {% endfor %}
             <!-- Pager -->
-            <ul class="pager">
-                <li class="next">
-                    <a href="#">Older Posts &rarr;</a>
-                </li>
-            </ul>
+            <!--<ul class="pager">-->
+                <!--<li class="next">-->
+                    <!--<a href="#">Older Posts &rarr;</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<div class="pagination">-->
+                <!--<span class="step-links">-->
+                    <!--{% if posts.has_previous %}-->
+                        <!--<a href="?page={{ posts.previous_page_number }}">previous</a>-->
+                    <!--{% endif %}-->
+
+                    <!--<span class="current">-->
+                        <!--Page {{ posts.number }} of {{ posts.paginator.num_pages }}.-->
+                    <!--</span>-->
+
+                    <!--{% if posts.has_next %}-->
+                        <!--<a href="?page={{ posts.next_page_number }}">next</a>-->
+                    <!--{% endif %}-->
+                <!--</span>-->
+            <!--</div>-->
+
+            {% if posts.has_other_pages %}
+                <div class="col-md-12 text-right">
+                    <ul class="pagination">
+                        {% if posts.has_previous %}
+                            <li><a href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+                        {% for i in posts.paginator.page_range %}
+                            {% if posts.number == i %}
+                                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if users.has_next %}
+                            <li><a href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+
+
         </div>
     </div>
 </div>
@@ -94,3 +160,5 @@
 <hr>
 
 {% endblock %}
+
+

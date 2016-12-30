@@ -1,5 +1,6 @@
 {% extends 'crowdfunding/index.html' %}
 
+{% load staticfiles %}
 {% block header %}
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
@@ -23,17 +24,21 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-6 text-primary">Amount - {{ post.amount }} </div>
+                    <div class="col-md-6 text-info text-right">End Date - {{ post.end_date|date:"F d, Y" }}</div>
+                </div>
                 <p>{{ post.text|linebreaksbr }}</p>
             </div>
-
+            <div id="voting">
                 <button type="button"
                         id="VoteBtn"
-                        class="btn btn-success fa fa-thumbs-o-up"a
+                        class="btn btn-success fa fa-thumbs-o-up"
                         data-loading-text=" ... " data-post-id="{{ post.id }}">
                     {{ upvote }}</button>
                 <button type="button" id="VoteBtnDown" class="btn btn-success fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
                     {{ downvote }}</button>
-
+            </div>
         </div>
     </div>
 </article>
@@ -41,6 +46,9 @@
 <hr>
 {% endblock %}
 
-
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/vote.js' %}"></script>
+{% endblock %}
 
 

@@ -16,3 +16,31 @@
   line-height: 42px;
   padding-left: 12px;
 }
+.fa-thumbs-o-up{
+    border-radius: 3px;
+    padding: 3px 10px;
+}
+.fa-thumbs-o-down{
+    border-radius: 3px;
+    padding: 3px 10px;
+}
+.color-gray{color: #232323; font-weight:300 !Important;}
+.color-gray label{font-weight:300 !Important;}
+.btn-align-submit{padding:10px 20px; border-radius:3px;}
+.amount-warning-msg{position: absolute;
+    top: 56% !Important;
+    left: 255px;
+    z-index: 2;
+    display: block;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    pointer-events: none;
+    font-size: 14px;
+    }
+
+    .m-b-30{margin-bottom:30px;}
+
+    @media (min-width: 768px){
+        .modal-dialog {width: 700px!Important;}
+}

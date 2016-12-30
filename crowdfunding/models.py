@@ -1,6 +1,27 @@
 from django.db import models
 from django.utils import timezone
-# from vote.managers import VotableManager
+from django.contrib.auth.models import User
+
+
+class CrowdFundingMemberGroup(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+class UserExtendedForFunding(models.Model):
+
+    # GROUP_TYPE = [('GROUP_A', "Group A"), ('GROUP_B', "Group B"), ('GROUP_C', "Group C"), ('GROUP_D', "Group D"), ('GROUP_E', "Group E")]
+    USER_TYPE = [('FR', "Facilitator"), ('MR', "Member"),]
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    funding_amout = models.DecimalField(max_digits=5, decimal_places=2)
+    # group_type = models.CharField(max_length=7,
+    #     choices=GROUP_TYPE, blank=True
+    # )
+    group_type = models.ForeignKey(CrowdFundingMemberGroup)
+    user_type = models.CharField(max_length=2,
+        choices=USER_TYPE, blank=True
+    )
 
 class CrowdFundingPostProposal(models.Model):
 
@@ -35,3 +56,6 @@ class CrowdFundingProposalVoting(models.Model):
 
     )
     proposal_id = models.ForeignKey(CrowdFundingPostProposal, models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.proposal_id
