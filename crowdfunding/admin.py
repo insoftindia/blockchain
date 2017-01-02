@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import CrowdFundingMemberGroup, UserExtendedForFunding, CrowdFundingPostProposal, CrowdFundingProposalVoting
+from .models import CrowdFundingMemberGroup, UserExtendedForFunding, CrowdFundingProposalSettings, CrowdFundingPostProposal, CrowdFundingProposalVoting
 
 class UserExtendedForFundingInline(admin.StackedInline):
     model = UserExtendedForFunding
@@ -13,6 +13,7 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(CrowdFundingProposalSettings)
 admin.site.register(CrowdFundingPostProposal)
 admin.site.register(CrowdFundingProposalVoting)
 admin.site.register(CrowdFundingMemberGroup)

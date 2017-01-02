@@ -12,19 +12,42 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required(login_url='/')
 def crowdfunding(request):
     group_type = CrowdFundingMemberGroup.objects.all()
-    posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now()).order_by('published_datetime')
-    paginator = Paginator(posts_list, 4)
+    latest_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='DT').order_by('published_datetime')
+    closed_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
+    return render(request, 'crowdfunding/crowdfunding_home.html', {'posts':latest_posts, 'closed_posts':closed_posts, 'group_type':group_type})
+
+@login_required(login_url='/')
+def latest_crowdfunding_proposals(request):
+    group_type = CrowdFundingMemberGroup.objects.all()
+    latest_posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='DT').order_by('published_datetime')
+    latest_paginator = Paginator(latest_posts_list, 4)
 
     page = request.GET.get('page')
     try:
-        posts = paginator.page(page)
+        latest_posts = latest_paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        posts = paginator.page(1)
+        latest_posts = latest_paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        posts = paginator.page(paginator.num_pages)
-    return render(request, 'crowdfunding/crowdfunding_lists.html', {'posts':posts, 'group_type':group_type})
+        latest_posts = latest_paginator.page(latest_paginator.num_pages)
+    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':latest_posts, 'group_type':group_type, 'title':'Latest Proposals'})
+
+@login_required(login_url='/')
+def closed_crowdfunding_proposals(request):
+    group_type = CrowdFundingMemberGroup.objects.all()
+    closed_posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
+    closed_paginator = Paginator(closed_posts_list, 4)
+    page = request.GET.get('page')
+    try:
+        closed_posts = closed_paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        closed_posts = closed_paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        closed_posts = closed_paginator.page(closed_paginator.num_pages)
+    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':closed_posts, 'group_type':group_type, 'title':'Closed Proposals'})
 
 @login_required(login_url='/')
 def create_crowdfunding(request):
@@ -88,3 +111,11 @@ def get_group_total_amount(request):
         'total_amt': group_funding_amount_tot['funding_amout__sum']
     }
     return JsonResponse(data)
+
+@login_required(login_url='/')
+def close_proposal(request):
+    post_id = request.GET.get('post_id', None)
+    proposal = CrowdFundingPostProposal.objects.filter(pk=post_id)
+    print proposal, "FFFFFFFFFFFFFFF"
+    proposal.update(state='CD')
+    return JsonResponse({})

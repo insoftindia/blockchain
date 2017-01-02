@@ -1,0 +1,102 @@
+{% extends 'crowdfunding/crowdfunding.html' %}
+
+{% load staticfiles %}
+{% block body_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" href="#latest" class="border-tab">Latest Proposals</a></li>
+                <li><a data-toggle="pill" href="#closed" class="border-tab">Closed Proposals</a></li>
+                <li><a data-toggle="pill" href="#voted" class="border-tab">Voted By Me</a></li>
+            </ul>
+            </div>
+            <div class="col-md-8">
+
+                <div class="tab-content">
+                    <!--panel one-->
+                    <div id="latest" class="tab-pane fade in active">
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <h1>Latest Proposals</h1><hr/>
+                        </div>
+                        {% for post in posts|slice:":3" %}
+                            <div class="col-md-12 m-b-10">
+                                <div class="post-preview">
+                                    <a href="{% url 'crowdfunding:crowdfunding_detail' pk=post.pk %}">
+                                        <h3 class="post-title">
+                                            {{ post.title }}
+                                        </h3>
+                                    </a>
+                                    <p class="post-meta">Posted by <a href="#">{{ post.author|title }}</a> on {{ post.published_datetime|date:"F d, Y" }}</p>
+                                    <div class="col-md-10 text-right">
+                                        <div id="voting">
+                                            <button type="button" id="VoteBtn" class="btn btn-success btn-like fa fa-thumbs-o-up" data-loading-text=" ... " data-post-id="2">
+                                                3</button>
+                                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="2">
+                                                1</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-right"><strong>$</strong> 100</div>
+                                    </div>
+                                    <hr/>
+                                </div>
+                             </div>
+
+                        {% endfor %}
+                        {% if posts|length > 2 %}
+                            <div class="col-md-12 text-right">
+                                <a href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}"><button type="button" class="read-more btn-color">Read more</button></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!--panel two-->
+                    <div id="closed" class="tab-pane fade">
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <h1>Closed Proposals</h1><hr/>
+                        </div>
+                        {% for closed_post in closed_posts|slice:":3" %}
+                            <div class="col-md-12 m-b-10">
+                                <div class="post-preview">
+                                    <a href="{% url 'crowdfunding:crowdfunding_detail' pk=closed_post.pk %}">
+                                        <h3 class="post-title">
+                                            {{ closed_post.title }}
+                                        </h3>
+                                    </a>
+                                    <p class="post-meta">Posted by <a href="#">{{ closed_post.author|title }}</a> on {{ closed_post.published_datetime|date:"F d, Y" }}</p>
+                                    <div class="col-md-10 text-right">
+                                        <div id="voting">
+                                            <button type="button" id="VoteBtn" class="btn btn-success btn-like fa fa-thumbs-o-up" data-loading-text=" ... " data-post-id="2">
+                                                3</button>
+                                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="2">
+                                                1</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="text-right"><strong>$</strong> 100</div>
+                                    </div>
+                                    <hr/>
+                                </div>
+                             </div>
+
+                        {% endfor %}
+                        {% if closed_posts|length > 2 %}
+                            <div class="col-md-12 text-right">
+                                <a href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}"><button type="button" class="read-more btn-color">Read more</button></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                <!--panel three-->
+                <div id="voted" class="tab-pane fade">
+                    <h3>Menu 2</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+{% endblock %}

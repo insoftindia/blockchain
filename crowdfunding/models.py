@@ -11,20 +11,20 @@ class CrowdFundingMemberGroup(models.Model):
 
 class UserExtendedForFunding(models.Model):
 
-    # GROUP_TYPE = [('GROUP_A', "Group A"), ('GROUP_B', "Group B"), ('GROUP_C', "Group C"), ('GROUP_D', "Group D"), ('GROUP_E', "Group E")]
     USER_TYPE = [('FR', "Facilitator"), ('MR', "Member"),]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     funding_amout = models.DecimalField(max_digits=5, decimal_places=2)
-    # group_type = models.CharField(max_length=7,
-    #     choices=GROUP_TYPE, blank=True
-    # )
     group_type = models.ForeignKey(CrowdFundingMemberGroup)
     user_type = models.CharField(max_length=2,
         choices=USER_TYPE, blank=True
     )
 
+class CrowdFundingProposalSettings(models.Model):
+    proposal_success_perc = models.IntegerField()
+
 class CrowdFundingPostProposal(models.Model):
 
+    STATE = [('DT', "Draft"), ('CD', "Closed"),]
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     text = models.TextField()
@@ -35,6 +35,9 @@ class CrowdFundingPostProposal(models.Model):
             blank=True, null=True)
     end_date = models.DateField(
             blank=True, null=True)
+    state = models.CharField(max_length=2,
+        choices=STATE, default='DT'
+    )
 
     def publish(self):
         self.published_datetime = timezone.now()

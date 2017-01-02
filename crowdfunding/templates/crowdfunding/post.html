@@ -7,7 +7,7 @@
 <header class="intro-header" style="background-image: url('/static/images/post-bg.jpg')">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="post-heading">
                     <h1>{{ post.title }}</h1>
                     <span class="meta">Posted by <a href="#">{{ post.author|title }}</a> on {{ post.published_datetime|date:"F d, Y" }}</span>
@@ -23,20 +23,23 @@
 <article>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-6 text-primary">Amount - {{ post.amount }} </div>
                     <div class="col-md-6 text-info text-right">End Date - {{ post.end_date|date:"F d, Y" }}</div>
                 </div>
                 <p>{{ post.text|linebreaksbr }}</p>
+                <div class="col-md-12 text-right">
+                    <a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>
+                </div>
             </div>
-            <div id="voting">
+            <div class="col-md-12" id="voting">
                 <button type="button"
                         id="VoteBtn"
-                        class="btn btn-success fa fa-thumbs-o-up"
+                        class="btn btn-success btn-like fa fa-thumbs-o-up"
                         data-loading-text=" ... " data-post-id="{{ post.id }}">
                     {{ upvote }}</button>
-                <button type="button" id="VoteBtnDown" class="btn btn-success fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
                     {{ downvote }}</button>
             </div>
         </div>
@@ -48,7 +51,7 @@
 
 {% block js %}
     {{ block.super }}
-    <script src="{% static 'js/vote.js' %}"></script>
+    <script src="{% static 'js/view_proposal.js' %}"></script>
 {% endblock %}
 
 

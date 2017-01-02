@@ -1,6 +1,6 @@
 #post-proposal-button {
     position: fixed;
-    bottom:10%;
+    top:50%;
     right: 2%;
     background: #777;
     width: 44px;
@@ -15,6 +15,7 @@
 #post-proposal-button i {
   line-height: 42px;
   padding-left: 12px;
+  padding-top:2px;
 }
 .fa-thumbs-o-up{
     border-radius: 3px;
@@ -40,7 +41,43 @@
     }
 
     .m-b-30{margin-bottom:30px;}
+    .m-b-10{margin-bottom: 10px;}
+h3{font-size:26px!Important;font-weight: 600;}
 
-    @media (min-width: 768px){
+.border-tab{
+    border-radius: 0px!Important;
+    padding: 40px 40px!Important;
+    text-align:center;
+    }
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{background-color:#777;}
+.nav-pills>li>a{background-color:#ccc;}
+.nav>li>a:focus, .nav>li>a:hover{background-color: #777;color:#fff;}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+        background-color: #777777!Important;
+    border-color: #777777!Important;
+    color:#fff!important;
+}
+.pagination>li>a, .pagination>li>span{color: #777777!Important;}
+.btn-color{background-color: #777!Important; border: 1px solid #777!important;color:#fff;}
+.btn-color:hover{background-color: #fff!Important; border: 1px solid #777!important;box-shadow:1px 1px 13px #777;color:#777;}
+.nav-pills>li{width:100%;padding-bottom:5px;}
+.nav-pills>li+li{margin-left:0px;}
+.bg-img{background-image: url('/static/images/home-bg.jpg'); height: 300px;}
+p{margin-bottom:10px!Important;}
+.post-preview>a>.post-title{margin-top:0px!important;}
+#post-proposal-button:hover{background:#fff;color:#777;}
+.btn-like{background-color: #777777!Important; border-color: #777777!important;}
+.btn-like:hover{background-color: #fff!Important;color:#777; border-color: #777777!important;}
+.read-more{margin-top:30px;    border-radius: 3px; padding: 6px 12px;}
+.dropdown-menu{min-width:144px !important;border:0px !important;}
+
+@media (min-width: 768px){
         .modal-dialog {width: 700px!Important;}
+}
+@media only screen and (min-width: 768px){
+    header .site-heading {
+    padding: 80px 0!important;
+    }
 }
