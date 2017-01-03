@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 
     $("#btn-close-proposal").click(function () {
         var post_id = $(this).attr('data-post-id');
-        alert("FFFFFFFFFFFFFFFFFFFFFF");
+//        alert("FFFFFFFFFFFFFFFFFFFFFF");
         $.ajax({
             url: '/crowdfunding/close_proposal/',
             data: {

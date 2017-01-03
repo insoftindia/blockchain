@@ -29,9 +29,11 @@
                     <div class="col-md-6 text-info text-right">End Date - {{ post.end_date|date:"F d, Y" }}</div>
                 </div>
                 <p>{{ post.text|linebreaksbr }}</p>
-                <div class="col-md-12 text-right">
-                    <a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>
-                </div>
+                {% if user.user_extented.user_type == 'FR' %}
+                    <div class="col-md-12 text-right">
+                        <a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>
+                    </div>
+                {% endif %}
             </div>
             <div class="col-md-12" id="voting">
                 <button type="button"

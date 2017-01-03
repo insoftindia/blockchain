@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
-                    <h1>Crowdfunding</h1>
+                    <h1>Intelligence of the Crowd</h1>
                     <hr class="small">
-                    <span class="subheading">Crowdfunding by Insoft</span>
+                    <!--<span class="subheading">Crowdfunding by Insoft</span>-->
                 </div>
             </div>
         </div>
@@ -27,70 +27,73 @@
 
 {% block content %}
 
-<a id="post-proposal-button" title="Create Proposal!" data-toggle="modal" data-target="#post-proposal"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-<!-- Modal -->
-<div class="modal fade" id="post-proposal" role="dialog">
-    <form method="POST" id="post-proposal-form" action="{% url 'crowdfunding:create_crowdfunding' %}">
-        {% csrf_token %}
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Create Crowdfunding</h4>
-                </div>
-                <div class="modal-body color-gray">
-                    <div class="form-group row">
-                        <label for="group-type" class="col-xs-4 col-form-label">Group</label>
-                        <div class="col-xs-8">
-                            <div class="form-group">
-                                <select class="form-control" name="group_type" id="group-type">
-                                    {% for g in group_type %}
-                                        <option value="{{ g }}">{{ g }}</option>
-                                    {% endfor %}
-                                </select>
+{% if user.user_extented.user_type == 'FR' %}
+    <a id="post-proposal-button" title="Create Proposal!" data-toggle="modal" data-target="#post-proposal"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="post-proposal" role="dialog">
+        <form method="POST" id="post-proposal-form" action="{% url 'crowdfunding:create_crowdfunding' %}">
+            {% csrf_token %}
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create Crowdfunding</h4>
+                    </div>
+                    <div class="modal-body color-gray">
+                        <div class="form-group row">
+                            <label for="group-type" class="col-xs-4 col-form-label">Group</label>
+                            <div class="col-xs-8">
+                                <div class="form-group">
+                                    <select class="form-control" name="group_type" id="group-type">
+                                        {% for g in group_type %}
+                                            <option value="{{ g }}">{{ g }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="group-total-amount-input" class="col-xs-4 col-form-label">Group Total Amt</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="number" name="group_total_amount" id="group-total-amount-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="title-input" class="col-xs-4 col-form-label">Title</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="text" name="title" id="title-input">
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-30">
+                            <label for="amount-input" class="col-xs-4 col-form-label">Amount</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="number" name="amount" id="amount-input">
+                            </div>
+                            <div class="amount-warning-msg text-danger" style="display: none;">Sorry, proposal amount is greater than group total amount</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="end-date-input" class="col-xs-4 col-form-label">End Date</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="date" name="end_date" id="end-date-input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="text-input" class="col-xs-4 col-form-label">Text</label>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" name="text" id="text-input"></textarea>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="group-total-amount-input" class="col-xs-4 col-form-label">Group Total Amt</label>
-                        <div class="col-xs-8">
-                            <input class="form-control" type="number" name="group_total_amount" id="group-total-amount-input" readonly>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="type" value="post-proposal" class="btn btn-default btn-color" id="proposal-post">Post</button>
                     </div>
-                    <div class="form-group row">
-                        <label for="title-input" class="col-xs-4 col-form-label">Title</label>
-                        <div class="col-xs-8">
-                            <input class="form-control" type="text" name="title" id="title-input">
-                        </div>
-                    </div>
-                    <div class="form-group row m-b-30">
-                        <label for="amount-input" class="col-xs-4 col-form-label">Amount</label>
-                        <div class="col-xs-8">
-                            <input class="form-control" type="number" name="amount" id="amount-input">
-                        </div>
-                        <div class="amount-warning-msg text-danger" style="display: none;">Sorry, proposal amount is greater than group total amount</div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="end-date-input" class="col-xs-4 col-form-label">End Date</label>
-                        <div class="col-xs-8">
-                            <input class="form-control" type="date" name="end_date" id="end-date-input">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="text-input" class="col-xs-4 col-form-label">Text</label>
-                        <div class="col-xs-8">
-                            <textarea class="form-control" name="text" id="text-input"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="type" value="post-proposal" class="btn btn-default btn-color" id="proposal-post">Post</button>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+{% endif %}
 
 {% block body_content %}
 {% endblock %}

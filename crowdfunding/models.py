@@ -12,12 +12,13 @@ class CrowdFundingMemberGroup(models.Model):
 class UserExtendedForFunding(models.Model):
 
     USER_TYPE = [('FR', "Facilitator"), ('MR', "Member"),]
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    funding_amout = models.DecimalField(max_digits=5, decimal_places=2)
-    group_type = models.ForeignKey(CrowdFundingMemberGroup)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_extented')
+    funding_amout = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    group_type = models.ForeignKey(CrowdFundingMemberGroup, blank=True, null=True)
     user_type = models.CharField(max_length=2,
         choices=USER_TYPE, blank=True
     )
+    # user_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/None/no-img.jpg')
 
 class CrowdFundingProposalSettings(models.Model):
     proposal_success_perc = models.IntegerField()
@@ -38,6 +39,7 @@ class CrowdFundingPostProposal(models.Model):
     state = models.CharField(max_length=2,
         choices=STATE, default='DT'
     )
+    group_type = models.ForeignKey(CrowdFundingMemberGroup, blank=True, null=True)
 
     def publish(self):
         self.published_datetime = timezone.now()

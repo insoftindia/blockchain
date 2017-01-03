@@ -78,25 +78,24 @@ def crowdfunding_vote(request):
     proposal = CrowdFundingPostProposal.objects.get(pk=post_id)
     success = False
     # self_user_proposal = CrowdFundingPostProposal.objects.filter(crowdfundingproposalvoting__author=request.user, pk=post_id)
-    self_user_voting = CrowdFundingProposalVoting.objects.filter(proposal_id__exact=post_id, author=request.user)
-    if self_user_voting:
-        if self_user_voting[0].vote_type == 'UP' and vote_type == 'DN':
-            self_user_voting.update(vote_type='DN')
+    if request.user.user_extented.user_type == 'MR':
+        self_user_voting = CrowdFundingProposalVoting.objects.filter(proposal_id__exact=post_id, author=request.user)
+        if self_user_voting:
+            if self_user_voting[0].vote_type == 'UP' and vote_type == 'DN':
+                self_user_voting.update(vote_type='DN')
+                success = True
+            elif self_user_voting[0].vote_type == 'DN' and vote_type == 'UP':
+                self_user_voting.update(vote_type='UP')
+                success = True
+        else:
+            # if not self_user_voting.exists():
+            proposal.crowdfundingproposalvoting_set.create(
+                            author=request.user,
+                            vote_type=vote_type
+                        )
             success = True
-        elif self_user_voting[0].vote_type == 'DN' and vote_type == 'UP':
-            self_user_voting.update(vote_type='UP')
-            success = True
-    else:
-        # if not self_user_voting.exists():
-        proposal.crowdfundingproposalvoting_set.create(
-                        author=request.user,
-                        vote_type=vote_type
-                    )
-        success = True
 
-    data = {
-        'success': success
-    }
+    data = {'success': success}
 
     data['upvote'] = CrowdFundingPostProposal.objects.filter(crowdfundingproposalvoting__vote_type='UP', pk=post_id).count()
     data['downvote'] = CrowdFundingPostProposal.objects.filter(crowdfundingproposalvoting__vote_type='DN', pk=post_id).count()
