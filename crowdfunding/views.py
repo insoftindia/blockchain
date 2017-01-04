@@ -51,7 +51,7 @@ def closed_crowdfunding_proposals(request):
 
 @login_required(login_url='/')
 def create_crowdfunding(request):
-    print "-----------------------> ", request.POST
+    # print "-----------------------> ", request.POST
     if request.method == "POST":
         form = CrowdFundingPostProposalForm(request.POST)
         if form.is_valid():
@@ -104,7 +104,7 @@ def crowdfunding_vote(request):
 @login_required(login_url='/')
 def get_group_total_amount(request):
     group_type = request.GET.get('group_type', None)
-    print group_type, " <--------------------------------"
+    # print group_type, " <--------------------------------"
     group_funding_amount_tot = UserExtendedForFunding.objects.filter(group_type__in=CrowdFundingMemberGroup.objects.filter(name=group_type)).aggregate(Sum('funding_amout'))
     data = {
         'total_amt': group_funding_amount_tot['funding_amout__sum']
@@ -115,6 +115,6 @@ def get_group_total_amount(request):
 def close_proposal(request):
     post_id = request.GET.get('post_id', None)
     proposal = CrowdFundingPostProposal.objects.filter(pk=post_id)
-    print proposal, "FFFFFFFFFFFFFFF"
+    # print proposal, "FFFFFFFFFFFFFFF"
     proposal.update(state='CD')
     return JsonResponse({})

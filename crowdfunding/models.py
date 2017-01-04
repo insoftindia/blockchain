@@ -18,7 +18,7 @@ class UserExtendedForFunding(models.Model):
     user_type = models.CharField(max_length=2,
         choices=USER_TYPE, blank=True
     )
-    # user_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/None/no-img.jpg')
+    user_image = models.ImageField(upload_to = 'media/', blank=True)
 
 class CrowdFundingProposalSettings(models.Model):
     proposal_success_perc = models.IntegerField()
@@ -63,4 +63,4 @@ class CrowdFundingProposalVoting(models.Model):
     proposal_id = models.ForeignKey(CrowdFundingPostProposal, models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return self.proposal_id
+        return 'Proposal={0}: Auther={1}'.format(self.proposal_id, self.author)

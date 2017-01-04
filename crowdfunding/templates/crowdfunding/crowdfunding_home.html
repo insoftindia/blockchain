@@ -31,10 +31,13 @@
                                     <p class="post-meta">Posted by <a href="#">{{ post.author|title }}</a> on {{ post.published_datetime|date:"F d, Y" }}</p>
                                     <div class="col-md-10 text-right">
                                         <div id="voting">
-                                            <button type="button" id="VoteBtn" class="btn btn-success btn-like fa fa-thumbs-o-up" data-loading-text=" ... " data-post-id="2">
-                                                3</button>
-                                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="2">
-                                                1</button>
+                                            <button type="button"
+                                                    id="VoteBtn"
+                                                    class="btn btn-success btn-like fa fa-thumbs-o-up"
+                                                    data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                                {{ upvote }}</button>
+                                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                                {{ downvote }}</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -67,12 +70,13 @@
                                     </a>
                                     <p class="post-meta">Posted by <a href="#">{{ closed_post.author|title }}</a> on {{ closed_post.published_datetime|date:"F d, Y" }}</p>
                                     <div class="col-md-10 text-right">
-                                        <div id="voting">
-                                            <button type="button" id="VoteBtn" class="btn btn-success btn-like fa fa-thumbs-o-up" data-loading-text=" ... " data-post-id="2">
-                                                3</button>
-                                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="2">
-                                                1</button>
-                                        </div>
+                                        <button type="button"
+                                                    id="VoteBtn"
+                                                    class="btn btn-success btn-like fa fa-thumbs-o-up"
+                                                    data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                                {{ upvote }}</button>
+                                        <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                            {{ downvote }}</button>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="text-right"><strong>$</strong> 100</div>

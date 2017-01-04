@@ -19,14 +19,17 @@
                     <p class="post-meta">Posted by <a href="#">{{ post.author|title }}</a> on {{ post.published_datetime|date:"F d, Y" }}</p>
                     <div class="col-md-10 text-right">
                         <div id="voting">
-                            <button type="button" id="VoteBtn" class="btn btn-success btn-like fa fa-thumbs-o-up" data-loading-text=" ... " data-post-id="2">
-                                3</button>
-                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="2">
-                                1</button>
+                            <button type="button"
+                                        id="VoteBtn"
+                                        class="btn btn-success btn-like fa fa-thumbs-o-up"
+                                        data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                    {{ upvote }}</button>
+                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                {{ downvote }}</button>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="text-right"><strong>$</strong> {{ post.amount }}</div>
+                        <div class="text-right"><img src="{% static 'images/icon.png' %}" alt=" " width="18" height="18"/> {{ post.amount }}</div>
                     </div>
                 </div>
                 <hr/>
