@@ -6,6 +6,8 @@ from django.utils import timezone
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Sum
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from login.forms import RegistrationForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -62,6 +64,26 @@ def create_crowdfunding(request):
         return redirect('/')
     else:
         form = CrowdFundingPostProposalForm()
+    return redirect('/')
+
+@login_required(login_url='/')
+def user_creation(request):
+    if request.method == "POST":
+        if request.POST.get('type') == 'create-user':
+            request.POST = request.POST.copy()
+            request.POST['repeat_password'] = request.POST.get('password')
+
+            form = RegistrationForm(request.POST)
+            if form.is_valid():
+                user = User.objects.create_user(
+                    username=form.cleaned_data['username'],
+                    password=form.cleaned_data['password'],
+                    email=form.cleaned_data['email'],
+                )
+                user_type = 'FR' if request.POST.get('user_type')=='FR' else 'MR'
+                funding_type = 'MR' if request.POST.get('funding_type')=='MR' else 'GR'
+                u_extended = UserExtendedForFunding(user=user, user_type=user_type,funding_type=funding_type, user_image=request.FILES.get('user_image'), funding_amout=request.POST.get('funding_amout'))
+                u_extended.save()
     return redirect('/')
 
 @login_required(login_url='/')
