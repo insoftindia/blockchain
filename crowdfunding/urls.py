@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^crowdfunding/$', views.crowdfunding, name='crowdfunding'),
     url(r'^crowdfunding/latest/proposals/$', views.latest_crowdfunding_proposals, name='crowdfunding_latest_proposals'),
     url(r'^crowdfunding/closed/proposals/$', views.closed_crowdfunding_proposals, name='crowdfunding_closed_proposals'),
+    url(r'^crowdfunding/votedbyme/proposals/$', views.voted_crowdfunding_proposals, name='crowdfunding_voted_proposals'),
     url(r'^crowdfunding/close_proposal/$', views.close_proposal, name='crowdfunding_close_proposal'),
     url(r'^crowdfunding/new/$', views.create_crowdfunding, name='create_crowdfunding'),
     url(r'^crowdfunding/user_creation/$',views.user_creation,name='user_creation'),

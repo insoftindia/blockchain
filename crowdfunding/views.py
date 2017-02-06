@@ -16,13 +16,18 @@ def crowdfunding(request):
     group_type = CrowdFundingMemberGroup.objects.all()
     latest_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='DT').order_by('published_datetime')
     closed_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
-    return render(request, 'crowdfunding/crowdfunding_home.html', {'posts':latest_posts, 'closed_posts':closed_posts, 'group_type':group_type})
+    closed_len = len(closed_posts)
+    latest_len = len(latest_posts)
+    facilitator_count = UserExtendedForFunding.objects.filter(user_type='FR').count()
+    member_count = UserExtendedForFunding.objects.filter(user_type='MR').count()
+    voted_by_me_count = CrowdFundingProposalVoting.objects.filter(author=request.user).count()
+    return render(request, 'crowdfunding/crowdfunding_home.html', {'posts':latest_posts, 'member_count':member_count, 'facilitator_count':facilitator_count, 'latest_len':latest_len, 'closed_len':closed_len, 'closed_posts':closed_posts, 'group_type':group_type, 'voted_by_me_count':voted_by_me_count})
 
 @login_required(login_url='/')
 def latest_crowdfunding_proposals(request):
     group_type = CrowdFundingMemberGroup.objects.all()
     latest_posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='DT').order_by('published_datetime')
-    latest_paginator = Paginator(latest_posts_list, 4)
+    latest_paginator = Paginator(latest_posts_list, 8)
 
     page = request.GET.get('page')
     try:
@@ -33,10 +38,20 @@ def latest_crowdfunding_proposals(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         latest_posts = latest_paginator.page(latest_paginator.num_pages)
-    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':latest_posts, 'group_type':group_type, 'title':'Latest Proposals'})
+
+    # upvote = CrowdFundingPostProposal.objects.filter(crowdfundingproposalvoting__vote_type='UP').count()
+    # downvote = CrowdFundingPostProposal.objects.filter(crowdfundingproposalvoting__vote_type='DN').count()
+    
+    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':latest_posts, 'group_type':group_type, 'title':'Active Proposals'})
+
+def voted_crowdfunding_proposals(request):
+    voted_posts_list = CrowdFundingProposalVoting.objects.filter(author=request.user)
+    self_user_proposal = [x.proposal_id for x in voted_posts_list]
+    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':self_user_proposal, 'title':'Voted Proposals'})
 
 @login_required(login_url='/')
 def closed_crowdfunding_proposals(request):
+
     group_type = CrowdFundingMemberGroup.objects.all()
     closed_posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
     closed_paginator = Paginator(closed_posts_list, 4)
@@ -126,7 +141,6 @@ def crowdfunding_vote(request):
 @login_required(login_url='/')
 def get_group_total_amount(request):
     group_type = request.GET.get('group_type', None)
-    # print group_type, " <--------------------------------"
     group_funding_amount_tot = UserExtendedForFunding.objects.filter(group_type__in=CrowdFundingMemberGroup.objects.filter(name=group_type)).aggregate(Sum('funding_amout'))
     data = {
         'total_amt': group_funding_amount_tot['funding_amout__sum']
@@ -137,6 +151,5 @@ def get_group_total_amount(request):
 def close_proposal(request):
     post_id = request.GET.get('post_id', None)
     proposal = CrowdFundingPostProposal.objects.filter(pk=post_id)
-    # print proposal, "FFFFFFFFFFFFFFF"
     proposal.update(state='CD')
     return JsonResponse({})

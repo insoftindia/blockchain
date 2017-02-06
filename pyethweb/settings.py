@@ -25,7 +25,7 @@ SECRET_KEY = 'w#k0_^h-x$^=02=rulq@=u_x^6$jo+c$f1q$=c=^8=n=&g##_l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['172.22.0.211', 'localhost']
 
 
 # Application definition
@@ -75,12 +75,24 @@ WSGI_APPLICATION = 'pyethweb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blockchain01',
+        'USER': 'odoo',
+        'PASSWORD': 'odoo',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation

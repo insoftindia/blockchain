@@ -1,13 +1,13 @@
 jQuery(document).ready(function($) {
 
     $(this).on('change', '#sel1', function(e){
-		if (this.value=='MR'){
-			$(this).parents('form').find('#funding_amout').css('visibility', 'visible');;
+        if (this.value=='MR'){
+            $(this).parents('form').find('#funding_amout').css('visibility', 'visible');;
 
-		}else {
-			$(this).parents('form').find('#funding_amout').css('visibility', 'hidden');;
-		}
-	});
+        }else {
+            $(this).parents('form').find('#funding_amout').css('visibility', 'hidden');;
+        }
+    });
 
     function _get_group_total_amt() {
         var group_type = $('#group-type').val();
@@ -101,5 +101,42 @@ jQuery(document).ready(function($) {
             reader.readAsDataURL(file);
         });
     });
+    var deadline = new Date(Date.parse('January 20 2017 17:00:00'));
+initializeClock('clockdiv', deadline);
+function initializeClock(id, endtime) {
+        var clock = document.getElementById(id);
+        var daysSpan = clock.querySelector('.days');
+        var hoursSpan = clock.querySelector('.hours');
+        var minutesSpan = clock.querySelector('.minutes');
+        var secondsSpan = clock.querySelector('.seconds');
+
+        function updateClock() {
+            var server_time = new Date();
+            var t = getTimeRemaining(endtime, server_time);
+            daysSpan.innerHTML = ('0' + t.days).slice(-2);
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+            if (t.total <= 0) {
+                clearInterval(timeinterval);
+            }
+        }
+        updateClock();
+        var timeinterval = setInterval(updateClock, 1000);
+    }
+    function getTimeRemaining(endtime, current_time) {
+        var t = Date.parse(endtime) - current_time;
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
 
 });

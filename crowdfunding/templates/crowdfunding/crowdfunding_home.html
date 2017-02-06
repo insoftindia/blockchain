@@ -2,105 +2,199 @@
 
 {% load staticfiles %}
 {% block body_content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" href="#latest" class="border-tab">Latest Proposals</a></li>
-                <li><a data-toggle="pill" href="#closed" class="border-tab">Closed Proposals</a></li>
-                <li><a data-toggle="pill" href="#voted" class="border-tab">Voted By Me</a></li>
-            </ul>
-            </div>
-            <div class="col-md-8">
+<style>
+    .dash-title-1{position: absolute;top:24%;left: 41%;font-size: 23px;color: #fff;}
+    .dash-text-1{position: absolute;top:32%;left: 39%;font-size: 28px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    .dash-number-1{position: absolute;top:54%;left: 48%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    
+    .dash-title-2{position: absolute;top:24%;left: 41%;font-size: 23px;color: #fff;}
+    .dash-text-2{position: absolute;top:32%;left: 35%;font-size: 28px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    .dash-number-2{position: absolute;top:54%;left: 49%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    
+    .dash-title-3{position: absolute;top:16%;left: 45%;font-size: 24px;color: #563b28;}
+    .dash-text-3{position: absolute;top:32%;left: 32%;font-size: 28px;color: #fff;text-transform: uppercase;font-weight: 500;}
+    .dash-number-3{position: absolute;top:64%;left: 51%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    
+    .dash-title-4{position: absolute;top:16%;left: 38%;font-size: 24px;color: #563b28;}
+    .dash-text-4{position: absolute;top:32%;left: 26%;font-size: 28px;color: #fff;text-transform: uppercase;font-weight: 500;}
+    .dash-number-4{position: absolute;top:64%;left: 46%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    
+    .dash-bor-right{border-right: 2px solid #c49a6c;}
+    .img-vote{position: absolute; top:93%;left: 39%;}
+    .vote-text{position: absolute; top:44%;left: 48%;z-index:1;font-size: 31px;}
+    .vote-txt{position: absolute; top:30%;left: 24%;color: #292115;z-index:1;font-size: 28px;}
 
-                <div class="tab-content">
-                    <!--panel one-->
-                    <div id="latest" class="tab-pane fade in active">
-                        <div class="clearfix"></div>
-                        <div class="col-md-12">
-                            <h1>Latest Proposals</h1><hr/>
-                        </div>
-                        {% for post in posts|slice:":3" %}
-                            <div class="col-md-12 m-b-10">
-                                <div class="post-preview">
-                                    <a href="{% url 'crowdfunding:crowdfunding_detail' pk=post.pk %}">
-                                        <h3 class="post-title">
-                                            {{ post.title }}
-                                        </h3>
-                                    </a>
-                                    <p class="post-meta">Posted by <a href="#">{{ post.author|title }}</a> on {{ post.published_datetime|date:"F d, Y" }}</p>
-                                    <div class="col-md-10 text-right">
-                                        <div id="voting">
-                                            <button type="button"
-                                                    id="VoteBtn"
-                                                    class="btn btn-success btn-like fa fa-thumbs-o-up"
-                                                    data-loading-text=" ... " data-post-id="{{ post.id }}">
-                                                {{ upvote }}</button>
-                                            <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
-                                                {{ downvote }}</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="text-right"><strong>$</strong> 100</div>
-                                    </div>
-                                    <hr/>
-                                </div>
-                             </div>
+    /*media query starts*/
+    @media screen and (min-width: 1400px) and (max-width: 1920px) {
+    
 
-                        {% endfor %}
-                        {% if posts|length > 2 %}
-                            <div class="col-md-12 text-right">
-                                <a href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}"><button type="button" class="read-more btn-color">Read more</button></a>
-                            </div>
-                        {% endif %}
-                    </div>
-                    <!--panel two-->
-                    <div id="closed" class="tab-pane fade">
-                        <div class="clearfix"></div>
-                        <div class="col-md-12">
-                            <h1>Closed Proposals</h1><hr/>
-                        </div>
-                        {% for closed_post in closed_posts|slice:":3" %}
-                            <div class="col-md-12 m-b-10">
-                                <div class="post-preview">
-                                    <a href="{% url 'crowdfunding:crowdfunding_detail' pk=closed_post.pk %}">
-                                        <h3 class="post-title">
-                                            {{ closed_post.title }}
-                                        </h3>
-                                    </a>
-                                    <p class="post-meta">Posted by <a href="#">{{ closed_post.author|title }}</a> on {{ closed_post.published_datetime|date:"F d, Y" }}</p>
-                                    <div class="col-md-10 text-right">
-                                        <button type="button"
-                                                    id="VoteBtn"
-                                                    class="btn btn-success btn-like fa fa-thumbs-o-up"
-                                                    data-loading-text=" ... " data-post-id="{{ post.id }}">
-                                                {{ upvote }}</button>
-                                        <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
-                                            {{ downvote }}</button>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="text-right"><strong>$</strong> 100</div>
-                                    </div>
-                                    <hr/>
-                                </div>
-                             </div>
+.img-vote{top: 27%;left: 42%;}
+    
 
-                        {% endfor %}
-                        {% if closed_posts|length > 2 %}
-                            <div class="col-md-12 text-right">
-                                <a href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}"><button type="button" class="read-more btn-color">Read more</button></a>
-                            </div>
-                        {% endif %}
-                    </div>
-                <!--panel three-->
-                <div id="voted" class="tab-pane fade">
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+.vote-text{top: 37%;left: 49%;}
+    
+
+}
+    
+    
+
+@media screen and (min-width: 601px) and (max-width: 768px) {
+    
+
+.img-vote{top: 112%;left: 28%;}
+    
+
+.vote-text{top: 123%;left: 46%;}
+    
+
+}
+    
+    
+
+@media screen and (max-width: 600px) {
+    
+
+.img-vote{top: 133%;left: 28%;}
+    
+
+.vote-text{top: 148%;left: 51%;}
+    
+
+}
+    
+    
+
+@media screen and (max-width: 400px) {
+    
+
+.dash-title-1{left: 34%;top: 24%;}
+    
+
+.dash-text-1{left:30%;}
+    
+
+.dash-number-1{left: 37%;}
+    
+
+.dash-title-2{left: 34%;top: 24%;}
+    
+
+.dash-text-2{left:26%;}
+    
+
+.dash-number-2{left: 37%;}
+    
+
+.dash-title-3{top: 2%;left: 42%;font-size: 18px;}
+    
+
+.dash-text-3{top: 31%;left: 35%;font-size: 18px;}
+    
+
+.dash-number-3{top: 58%;left: 42%; font-size: 24px;}
+    
+
+.dash-title-4{top: 2%;left: 29%;font-size: 18px;}
+    
+
+.dash-text-4{top: 31%;left: 18%;font-size: 18px;}
+    
+
+.dash-number-4{top: 58%;left: 32%; font-size: 24px;}
+    
+
+.img-vote{top: 129%; left: 2%;}
+    
+
+.vote-text {top: 150%;left: 44%;}
+    
+
+} 
+
+</style>
+
+<div style="margin-top:10px;"></div>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            {% if user.is_superuser %}
+                <div class="col-md-6 text-center dash-bor-right" style="left:6px;">
+                    <img src="../static/images/circle.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
+                    
+                    <div class="dash-title-1">Number of</div>
+                    <div class="dash-text-1">Members</div>
+                    <div class="dash-number-1">{{ member_count }}</div>
                 </div>
-            </div>
+                <div class="col-md-6 text-center">
+                    <img src="../static/images/circle.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
+                    <div class="dash-title-2">Number of</div>
+                    <div class="dash-text-2">facilitators</div>
+                    <div class="dash-number-2">{{ facilitator_count }}</div>
+                </div>  
+                <div class="clearfix"></div>
+                <div class="col-md-6 text-center">
+                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <div class="dash-title-3">Number of</div>
+                    <a class="dash-text-3" href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" class="border-tab">Active Proposals</a>
+                    <div class="dash-number-3">{{ latest_len }}</div>
+                </div>  
+                <div>
+                <div class="col-md-6 text-center">
+                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <div class="dash-title-4">Number of</div>
+                    <a class="dash-text-4" href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" class="border-tab">Closed Proposals</a>
+                    <div class="dash-number-4">{{ closed_len }}</div>
+                </div>
+                <div class="img-vote" style="top:91%;">
+                    <img src="../static/images/point.png" alt="Smiley face" height="353" width="293" class="img-responsive">
+                    <!-- <a class="vote-txt" href="{% url 'crowdfunding:crowdfunding_voted_proposals' %}" class="border-tab">Voted By Me</a> -->
+                    <div class="vote-text" style="top:35%; left:25%;"><img src="{% static 'images/admin.jpg' %}" alt=" " width="150" height="150"/></div> 
+                </div>
+                </div>
+            {% endif %}
+            {% if user.user_extented.user_type == 'FR' %}
+                <div class="img-vote" style="top:46%; z-index: 111;">
+                    <img src="../static/images/vote.png" alt="Smiley face" height="353" width="293" class="img-responsive">
+                    <div class="vote-txt" style="top:27%; left:12%; font-size: 24px;" class="border-tab">Number of Members</div>
+                    <div class="vote-text" style="top:40%; left:48%">{{ member_count }}</div> 
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-md-6 text-center">
+                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <div class="dash-title-3">Number of</div>
+                    <a class="dash-text-3" href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" class="border-tab">Active Proposals</a>
+                    <div class="dash-number-3">{{ latest_len }}</div>
+                </div>  
+                <div class="col-md-6 text-center">
+                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <div class="dash-title-4">Number of</div>
+                    <a class="dash-text-4" href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" class="border-tab">Closed Proposals</a>
+                    <div class="dash-number-4">{{ closed_len }}</div>
+                </div>
+            {% endif %}
+            {% if user.user_extented.user_type == 'MR' %}
+                <div class="clearfix"></div>
+                <div class="col-md-6 text-center">
+                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <div class="dash-title-3">Number of</div>
+                    <a class="dash-text-3" href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" class="border-tab">Active Proposals</a>
+                    <div class="dash-number-3">{{ latest_len }}</div>
+                </div>  
+                <div class="col-md-6 text-center">
+                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <div class="dash-title-4">Number of</div>
+                    <a class="dash-text-4" href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" class="border-tab">Closed Proposals</a>
+                    <div class="dash-number-4">{{ closed_len }}</div>
+                </div>
+                <div class="img-vote" style="top:46%">
+                    <img src="../static/images/vote.png" alt="Smiley face" height="353" width="293" class="img-responsive">
+                    <a class="vote-txt" style="top:30%" href="{% url 'crowdfunding:crowdfunding_voted_proposals' %}" class="border-tab">Voted By Me</a>
+                    <div class="vote-text" style="top:42%">{{ voted_by_me_count }}</div> 
+                </div>
+            {% endif %}
         </div>
     </div>
-</div>
-
-<hr>
+</section>  
+<br><br><br>
 {% endblock %}
