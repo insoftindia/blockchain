@@ -25,7 +25,7 @@ SECRET_KEY = 'w#k0_^h-x$^=02=rulq@=u_x^6$jo+c$f1q$=c=^8=n=&g##_l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.22.0.211', 'localhost']
+ALLOWED_HOSTS = ['182.156.255.69', 'insoft.blockchain', 'insoft.blockchain.com', '172.22.0.211', 'localhost']
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'crowdfunding',
+    'pure_pagination',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -86,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'blockchain01',
-        'USER': 'odoo',
-        'PASSWORD': 'odoo',
+        'USER': 'openerp',
+        'PASSWORD': 'openerp',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -136,3 +138,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 5,
+    'MARGIN_PAGES_DISPLAYED': 2,
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}

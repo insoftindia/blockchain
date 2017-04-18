@@ -14,6 +14,9 @@ urlpatterns = [
     url(r'^crowdfunding/(?P<pk>\d+)/$', views.crowdfunding_detail, name='crowdfunding_detail'),
     url(r'^crowdfunding/vote/$', views.crowdfunding_vote, name='crowdfunding_vote'),
     url(r'^crowdfunding/get_group_total_amount/$', views.get_group_total_amount, name='get_group_total_amount'),
-    # url(r'^crowdfunding/downvote/$', views.crowdfunding_downvote, name='crowdfunding_downvote'),
+    url(r'^crowdfunding/post_comment/$', views.post_comment, name='post_comment'),
+    url(r'^crowdfunding/get_user_private_key/$', views.get_user_private_key, name='get_user_private_key'),
+    url(r'^crowdfunding/make_history/$', views.make_history, name='make_history'),
+    
     # url(r'^profile/edit/$', views.edit_profile, name='edit_profile'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

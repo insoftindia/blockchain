@@ -1,0 +1,43 @@
+<!doctype>
+<html>
+
+<head>
+<script type="text/javascript" src="../node_modules/bignumber.js/bignumber.min.js"></script>
+<script type="text/javascript" src="../dist/web3.js"></script>
+<!--
+<script type="text/javascript" src="../dist/web3-light.js"></script>
+-->
+<script type="text/javascript">
+   
+    var Web3 = require('web3');
+    var web3 = new Web3();
+    web3.setProvider(new web3.providers.HttpProvider('http://ingethfyi.southindia.cloudapp.azure.com:8545'));
+		
+    function watchBalance() {
+        web3.eth.getAccounts(console.log);
+		console.log(web3);
+        var coinbase = web3.eth.coinbase;
+        console.log(coinbase);
+        var originalBalance = web3.eth.getBalance(coinbase).toNumber();
+        var originalBalance1111 = web3.fromWei(web3.eth.getBalance('0xe363Ca6e1B9a0624717EE1430d8c36C878DDfE30').toNumber(), "ether");
+        console.log(originalBalance1111);
+        document.getElementById('coinbase').innerText = 'coinbase: ' + coinbase;
+        document.getElementById('original').innerText = ' original balance: ' + originalBalance + '    watching...';
+        web3.eth.filter('latest').watch(function() {
+            var currentBalance = web3.eth.getBalance(coinbase).toNumber();
+            document.getElementById("current").innerText = 'current: ' + currentBalance;
+            document.getElementById("diff").innerText = 'diff:    ' + (currentBalance - originalBalance);
+        });
+    }
+</script>
+</head>
+<body>
+    <h1>coinbase balance</h1>
+    <button type="button" onClick="watchBalance();">watch balance</button>
+    <div></div>
+    <div id="coinbase"></div>
+    <div id="original"></div>
+    <div id="current"></div>
+    <div id="diff"></div>
+</body>
+</html>

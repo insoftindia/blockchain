@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from simple_history.models import HistoricalRecords
 
 class CrowdFundingMemberGroup(models.Model):
     name = models.CharField(max_length=200)
@@ -23,9 +23,12 @@ class UserExtendedForFunding(models.Model):
     funding_type = models.CharField(max_length=2,
         choices=FUNDING_TYPE, blank=True
         )
+    ether_account_private_key = models.CharField(max_length=200, blank=True, null=True)
+    history = HistoricalRecords()
 
 class CrowdFundingProposalSettings(models.Model):
     proposal_success_perc = models.IntegerField()
+    history = HistoricalRecords()
 
 class CrowdFundingPostProposal(models.Model):
 
@@ -44,6 +47,9 @@ class CrowdFundingPostProposal(models.Model):
         choices=STATE, default='DT'
     )
     group_type = models.ForeignKey(CrowdFundingMemberGroup, blank=True, null=True)
+    up_count = models.IntegerField(default=0)
+    down_count = models.IntegerField(default=0)
+    history = HistoricalRecords()
 
     def publish(self):
         self.published_datetime = timezone.now()
@@ -65,20 +71,17 @@ class CrowdFundingProposalVoting(models.Model):
 
     )
     proposal_id = models.ForeignKey(CrowdFundingPostProposal, models.SET_NULL, blank=True, null=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return 'Proposal={0}: Auther={1}'.format(self.proposal_id, self.author)
 
+class Comment(models.Model):
+    proposal_id = models.ForeignKey(CrowdFundingPostProposal, models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey('auth.User')
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    history = HistoricalRecords()
 
-
-        
-# class ChatRoom(models.Model):
-#     name = models.CharField(max_length=200)
- 
-#     def __unicode__(self):
-#         return self.name
- 
-# from django.contrib import admin
-# from chat.models import ChatRoom
- 
-# admin.site.register(ChatRoom)        
+    def __str__(self):
+        return self.text

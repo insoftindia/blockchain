@@ -146,17 +146,24 @@
 
 						<div class="form-group col-md-6">
 							  <label for="sel2">Funding Type:</label>
-							   <select class="form-control" id="sel2" name="funding_type">
-								<option value="MR"> Member Funding</option>
-								<option value="GR">Group Funding</option>
+							   <select class="form-control" id="sel2" name="funding_type" disabled>
+
+								    <option value="GR">Group Funding</option>
+                                   <option value="MR"> Member Funding</option>
 							  </select>
 						</div>
+
+                        <div class="form-group col-md-6">
+                            <label for="private_key">Wallet Private Key:</label>
+                            <input type="text" class="form-control" id="private_key" name="private_key" placeholder="Enter Private Key">
+                        </div>
+
 						<div class="clearfix"></div>
 
-						<div class="form-group col-md-6" id="funding_amout" style="visibility:hidden;">
-							 <label for="funding_amout" >Funding Amount:</label>
-							 <input id="txtAmount" value="Amuont" name="funding_amout" type="Number" step="0.01" min="0" placeholder="Funding Amount" class="form-control"/>
-						</div>
+						<!--<div class="form-group col-md-6" id="funding_amout" style="visibility:hidden;">-->
+							 <!--<label for="funding_amout" >Funding Amount:</label>-->
+							 <!--<input id="txtAmount" value="Amuont" name="funding_amout" type="Number" step="0.01" min="0" placeholder="Funding Amount" class="form-control"/>-->
+						<!--</div>-->
 
 						<div class="col-md-6 text-right">
 							<button type="submit" name="type" value="create-user" class="btn btn-default btn-color" id="btn-user-creation">Create</button>

@@ -38,7 +38,7 @@
 .detail-link a:hover{text-decoration:none !important;cursor: pointer;}
 
 .boder-list{border: 1px solid #eee;padding: 20px; box-shadow: 1px 1px 8px #ccc;}
-    .chip {
+.chip {
     display: inline-block;
     padding: 5 25px;
     height: 50px;
@@ -129,129 +129,80 @@ p{margin-bottom:10px!Important;}
 
 /* ------------------------ */
 
-body {
-    background: url("../img/background.jpg") repeat scroll left top white;
+/* Comments */
+.button-align-submit {
+    border: 0px #ccc;
+    background-color: #eeeeee;
 }
-html {
-    height: 100%;
+.post-footer {
+  padding: 15px;
 }
-#content {
-    margin: 0 auto;
-    width: 70%;
-    padding: 10px;
+.post-footer .input-group-addon a {
+  color: #454545;
 }
-#log {
-    color: #CCC;
+.post-footer .comments-list {
+  padding: 0;
+  margin-top: 20px;
+  list-style-type: none;
 }
-.message {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    position: relative;
-    padding-right: 30px
+.post-footer .comments-list .comment {
+  display: block;
+  width: 100%;
+  margin: 20px 0;
 }
-.message-text {
-    font-size: 1.4em;
-    color: white;
+.post-footer .comments-list .comment .avatar {
+  width: 35px;
+  height: 35px;
 }
-#input {
+.post-footer .comments-list .comment .comment-heading {
+  display: block;
+  width: 100%;
+}
+.post-footer .comments-list .comment .comment-heading .user {
+  font-size: 14px;
+  font-weight: bold;
+  display: inline;
+  margin-top: 0;
+  margin-right: 10px;
+}
+.post-footer .comments-list .comment .comment-heading .time {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 0;
+  display: inline;
+}
+.post-footer .comments-list .comment .comment-body {
+  margin-left: 50px;
+}
+.post-footer .comments-list .comment > .comments-list {
+  margin-left: 50px;
+}
+/* ------------------------ */
 
-}
-#input-text {
-    border: medium none;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 0 3px #808080 inset;
-    font-size: 30px;
-    height: 50px;
-    width: 100%;
-    line-height: 1.2em;
-    line-height: 26px\9; /*for IE */
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-#select-lib {
-    border: medium none;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 0 3px #808080 inset;
-    font-size: 30px;
-    height: 50px;
-    width: 100%;
-    line-height: 1.2em;
-    line-height: 26px\9; /*for IE */
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;  
-}
-.message-delete {
-    position:absolute;
-    right: 3px;
-    top:3px;
-}
-.message-delete a {
-    color: red;
-    text-decoration: none;
-}
-.message-delete a:hover {
-    text-decoration: none;
-}
-.message-delete-image {
-    width: 24px;
-    height: 24px;
-    background-image: url('../img/delete.png');
+.page, .prev, .next{
     display: inline-block;
+    padding: 3px 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    background: #eee;
+    font-weight: bold;
 }
-#login {
-    margin: 0 auto;
-    margin-top: 60px;
-    width: 40%;
-    min-width: 300px;
+.page:hover, .prev:hover, .next:hover{
+    background: #333;
+}
+.page.current{
+    background: #333;
     color: white;
 }
-#login input[type="text"], #login input[type="password"] {
-    border: medium none;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 0 3px #808080 inset;
-    font-size: 30px;
-    height: 50px;
-    padding: 0 7px;
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; 
+.page.disabled, .prev.disabled, .next.disabled{
+    color: #ddd;
+    cursor: default;
 }
-#login .btn {
-    font-size: 30px;
-    padding: 15px;
+
+.text-index{
+z-index: -999!important;
 }
-#login label {
-    color: #FFE5FF;
-    font-size: 20px;
-}
-.center {
-    text-align: center;
-}
-.left {
-    text-align: left;
-}
-/*.nav {
-    font-size: 16px;
-    padding: 12px;
-    max-width:10%;
-    color: white;
-    overflow: hidden;
-}*/
-.nav:hover {
-    color: white;
-}
-#home {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-#logout {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-}
+
+.btn-size-25{font-size:25px!Important;}

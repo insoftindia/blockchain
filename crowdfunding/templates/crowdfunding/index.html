@@ -24,16 +24,30 @@
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
+
+    <!--<script src="{% static 'web3/node_modules/bignumber.js/bignumber.min.js' %}"></script>-->
+    <!--<script src="{% static 'web3/dist/web3.js' %}"></script>-->
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+        <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
+
+
     <![endif]-->
 
 </head>
 
 <body>
+	
+	<div id="mySidenav" class="sidenav">
+		 <img class= "closebtn" id="closeNav" src="{% static 'images/3.png' %}"></img>
+		 
+		 <div>
+			 <p id = "test2" class="test2"></p>
+        </div>
+	</div>
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -45,6 +59,7 @@
                     Menu <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="/">Blockchain</a>
+                <img class= "image-test" id="openNav" src="{% static 'images/4.png' %}"></img>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,11 +69,12 @@
                         <a href="/">Home</a>
                     </li>
                     <li>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.username }}
+                        <a id="user-data" class="dropdown-toggle" data-toggle="dropdown" href="#" data-user-id="{{ user.id }}">{{ user.username }}
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" style="color: #555">Account <span class="glyphicon pull-right"><i class="fa fa-usd" aria-hidden="true"></i>100</span></a></li>
+                            <li><a href="#" style="color: #555">Account <span class="glyphicon pull-right" id="ether-balance"><i class="fa fa-usd" aria-hidden="true"></i></span></a></li>
+                            <!--<li><a id="transfer-ether-button" title="Transfer Ether!" data-toggle="modal" data-target="#transfer-ether" style="color: #555">Send Amount</a></li>-->
                             <li><a href="{% url 'signout' %}" style="color: #555">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
                         </ul>
                     </li>
@@ -68,6 +84,44 @@
         </div>
         <!-- /.container -->
     </nav>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="transfer-ether" role="dialog">
+        <form method="POST" id="transfer-ether-form">
+            {% csrf_token %}
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Transfer Ether</h4>
+                    </div>
+                    <div class="modal-body color-gray">
+
+                        <div class="form-group row">
+                            <label for="account-input" class="col-xs-4 col-form-label">Account</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="text" name="account" id="account-input">
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-30">
+                            <label for="ether-amount-input" class="col-xs-4 col-form-label">Token (<img src="{% static 'images/icon.png' %}" alt=" " width="18" height="18"/>)</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="number" name="ether-amount" id="ether-amount-input">
+                            </div>
+                            <!--<div class="amount-warning-msg text-danger" style="display: none;">Sorry, proposal amount is greater than group total amount</div>-->
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="type" value="ether-tranfer" class="btn btn-default btn-color" id="ether-tranfer">Transfer</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
     {% block header %}
     {% endblock %}
@@ -125,9 +179,13 @@
 
         <!-- Theme JavaScript -->
         <script src="{% static 'js/clean-blog.min.js' %}"></script>
+        <!--<script src="{% static 'js/web3-ether-connect.js' %}"></script>-->
     {% endblock %}
     <!--<script src="{% static 'js/view_proposal.js' %}"></script>-->
-
+	 
+	 <script src="{% static 'js/alert.js' %}"></script>
+	<link href="{% static 'css/alert.css' %}" rel="stylesheet">
+	
 </body>
 
 </html>

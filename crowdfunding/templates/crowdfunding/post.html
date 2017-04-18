@@ -31,30 +31,68 @@
                 <p>{{ post.text|linebreaksbr }}</p>
 
             </div>
-            <div class="col-md-6" id="voting">
+            <div class="col-md-6 text-right" id="voting">
                 <button type="button"
                         id="VoteBtn"
-                        class="btn btn-success btn-like fa fa-thumbs-o-up"
+                        class="btn btn-success btn-size-25 btn-like fa fa-thumbs-o-up"
                         data-loading-text=" ... " data-post-id="{{ post.id }}">
-                    {{ upvote }}</button>
-                <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
-                    {{ downvote }}</button>
+                    {{ post.up_count }}</button>
+                <button type="button" id="VoteBtnDown" class="btn btn-success btn-size-25 btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                    {{ post.down_count }}</button>
             </div>
-            {% if user.user_extented.user_type == 'FR' %}
+            {% if user.user_extented.user_type == 'FR' and post.state == 'DT' %}
                 <div class="col-md-6 text-right">
                     <a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>
                 </div>
             {% endif %}
-
-            
         </div>
 
-        <div id="content">
-            <div id="input">
-                <input type="text" id="input-text" placeholder="type new message and press ENTER..." />
+        <div class="post-footer">
+            <div class="input-group">
+                <textarea placeholder="Message" class="form-control" id="comment-text" name="comment-text" data-post-id="{{ post.id }}"></textarea>
+
+                <!--<input class="form-control" id="comment-text" name="comment-text" placeholder="Add a comment" type="text" data-post-id="{{ post.id }}">-->
+                <span class="input-group-addon">
+                    <!--<a href="{% url 'crowdfunding:crowdfunding_detail' pk=post.pk %}"><button type="button" id='btn-submit-comment' class="fa fa-paper-plane" data-post-id="{{ post.id }}"></button></a>-->
+                    <!--<button type="button" class="button-align-submit" id='btn-submit-comment' data-post-id="{{ post.id }}"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>-->
+                    <button type="button" class="button-align-submit" id='btn-submit-comment' data-post-id="{{ post.id }}">Post</button>
+                </span>
             </div>
-            <div id="log"></div>
+            {% for comment in comments %}
+                <ul class="comments-list">
+                    <li class="comment">
+                        <a class="pull-left" href="#">
+                            {% if comment.author.user_extented.user_image %}
+                                <img class="img-circle avatar" src="{{ comment.author.user_extented.user_image.url }}" alt="avatar">
+                            {% else %}
+                                <img class="img-circle avatar" src="{% static 'images/img_avatar.png' %}" alt="avatar">
+                            {% endif %}
+                        </a>
+
+                        <div class="comment-body">
+                            <div class="comment-heading">
+                                <h4 class="user">{{ comment.author|title }}</h4>
+                            </div>
+                            <p>{{ comment.text }}</p>
+                            <ul class="list-unstyled list-inline">
+                                <li>{{ comment.created_date }}</li>
+                                <!--<li><a href="#" style="color: #4a245e;font-size: 1em;display:block;margin-top: 6px;margin-left: 2em;">Reply</a></li>-->
+                            </ul>
+                        </div>
+                        <div class="input-group" style="display:none">
+                            <textarea placeholder="Message" class="form-control text-index" id="comment-text-reply" name="comment-text" data-post-id="{{ post.id }}" data-comment-id="{{ comment.id }}"></textarea>
+                            <span class="input-group-addon">
+                                <button type="button" class="button-align-submit" id='btn-submit-comment-reply' data-post-id="{{ post.id }}" data-comment-id="{{ comment.id }}">Post</button>
+                            </span>
+                        </div>
+
+                    </li>
+                </ul>
+            {% empty %}
+                <p>No comments here yet :(</p>
+            {% endfor %}
         </div>
+
 
     </div>
 </article>

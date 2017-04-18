@@ -3,27 +3,27 @@
 {% load staticfiles %}
 {% block body_content %}
 <style>
-    .dash-title-1{position: absolute;top:24%;left: 41%;font-size: 23px;color: #fff;}
-    .dash-text-1{position: absolute;top:32%;left: 39%;font-size: 28px;color: #563b28;text-transform: uppercase;font-weight: 500;}
-    .dash-number-1{position: absolute;top:54%;left: 48%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    .dash-title-1{position: absolute;top:24%;left: 36%;font-size: 20px;color: #fff;}
+    .dash-text-1{position: absolute;top:32%;left: 33%;font-size: 24px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    .dash-number-1{position: absolute;top:54%;left: 45%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
     
-    .dash-title-2{position: absolute;top:24%;left: 41%;font-size: 23px;color: #fff;}
-    .dash-text-2{position: absolute;top:32%;left: 35%;font-size: 28px;color: #563b28;text-transform: uppercase;font-weight: 500;}
-    .dash-number-2{position: absolute;top:54%;left: 49%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    .dash-title-2{position: absolute;top:24%;left: 35%;font-size: 20px;color: #fff;}
+    .dash-text-2{position: absolute;top:32%;left: 29%;font-size: 24px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    .dash-number-2{position: absolute;top:54%;left: 45%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
     
-    .dash-title-3{position: absolute;top:16%;left: 45%;font-size: 24px;color: #563b28;}
-    .dash-text-3{position: absolute;top:32%;left: 32%;font-size: 28px;color: #fff;text-transform: uppercase;font-weight: 500;}
+    .dash-title-3{position: absolute;top:12%;left: 45%;font-size: 18px;color: #c3996b;}
+    .dash-text-3{position: absolute;top:32%;left: 37%;font-size: 20px;color: #fff;text-transform: uppercase;font-weight: 500;}
     .dash-number-3{position: absolute;top:64%;left: 51%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
     
-    .dash-title-4{position: absolute;top:16%;left: 38%;font-size: 24px;color: #563b28;}
-    .dash-text-4{position: absolute;top:32%;left: 26%;font-size: 28px;color: #fff;text-transform: uppercase;font-weight: 500;}
-    .dash-number-4{position: absolute;top:64%;left: 46%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
+    .dash-title-4{position: absolute;top:12%;left: 34%;font-size: 18px;color: #c3996b;}
+    .dash-text-4{position: absolute;top:32%;left: 26%;font-size: 20px;color: #fff;text-transform: uppercase;font-weight: 500;}
+    .dash-number-4{position: absolute;top:66%;left: 40%;font-size: 31px;color: #563b28;text-transform: uppercase;font-weight: 500;}
     
     .dash-bor-right{border-right: 2px solid #c49a6c;}
     .img-vote{position: absolute; top:93%;left: 39%;}
-    .vote-text{position: absolute; top:44%;left: 48%;z-index:1;font-size: 31px;}
-    .vote-txt{position: absolute; top:30%;left: 24%;color: #292115;z-index:1;font-size: 28px;}
-
+    .vote-text{position: absolute; top:44%;left: 49%;z-index:1;font-size: 31px;}
+    .vote-txt{position: absolute; top:35%;left: 45%;color: #292115;z-index:1;font-size: 19px;}
+    .vote-f1{left:42%!important;}
     /*media query starts*/
     @media screen and (min-width: 1400px) and (max-width: 1920px) {
     
@@ -45,11 +45,15 @@
     
 
 .vote-text{top: 123%;left: 46%;}
-    
+ .vote-f1{left:37%!important;} 
 
 }
     
-    
+ @media screen and (min-width: 601px) and (max-width: 1000px) {
+          .vote-txt{left: 40%;}    
+           .vote-f1{left:37%!important;} 
+}
+
 
 @media screen and (max-width: 600px) {
     
@@ -58,13 +62,14 @@
     
 
 .vote-text{top: 148%;left: 51%;}
-    
+    .vote-txt{left: 40%;}    
+
 
 }
     
     
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     
 
 .dash-title-1{left: 34%;top: 24%;}
@@ -73,7 +78,7 @@
 .dash-text-1{left:30%;}
     
 
-.dash-number-1{left: 37%;}
+.dash-number-1{left: 45%;}
     
 
 .dash-title-2{left: 34%;top: 24%;}
@@ -82,92 +87,97 @@
 .dash-text-2{left:26%;}
     
 
-.dash-number-2{left: 37%;}
+.dash-number-2{left: 45%;}
     
 
-.dash-title-3{top: 2%;left: 42%;font-size: 18px;}
+.dash-title-3{top: 6%;left: 40%;font-size: 15px;}
     
 
-.dash-text-3{top: 31%;left: 35%;font-size: 18px;}
+.dash-text-3{top: 31%;left: 32%;font-size: 16px;}
     
 
-.dash-number-3{top: 58%;left: 42%; font-size: 24px;}
+.dash-number-3{top: 61%;left: 50%; font-size: 20px;}
     
 
-.dash-title-4{top: 2%;left: 29%;font-size: 18px;}
+.dash-title-4{top: 6%;left: 32%;font-size: 15px;}
     
 
-.dash-text-4{top: 31%;left: 18%;font-size: 18px;}
+.dash-text-4{top: 31%;left: 18%;font-size: 16px;}
     
 
-.dash-number-4{top: 58%;left: 32%; font-size: 24px;}
+.dash-number-4{top: 65%;left: 45%; font-size: 20px;}
     
 
 .img-vote{top: 129%; left: 2%;}
     
 
-.vote-text {top: 150%;left: 44%;}
+.vote-text {left: 47%;}
     
-
+.vote-txt{left: 35%;}
+.vote-f1{left:25%!important;}
 } 
 
 </style>
 
 <div style="margin-top:10px;"></div>
 <section>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             {% if user.is_superuser %}
-                <div class="col-md-6 text-center dash-bor-right" style="left:6px;">
-                    <img src="../static/images/circle.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
+                <div class="col-md-4 text-center" style="left:6px;">
+                    <img src="../static/images/circle1.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
                     
-                    <div class="dash-title-1">Number of</div>
-                    <div class="dash-text-1">Members</div>
+                    <!-- <div class="dash-title-1">Number of</div> -->
+                    <!-- <div class="dash-text-1">Members</div> -->
                     <div class="dash-number-1">{{ member_count }}</div>
                 </div>
-                <div class="col-md-6 text-center">
-                    <img src="../static/images/circle.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
-                    <div class="dash-title-2">Number of</div>
-                    <div class="dash-text-2">facilitators</div>
+                 <div class="col-md-4 text-center">
+                    <div class="">
+                        <img src="../static/images/admin-image2.png" alt="Smiley face" height="353" style="display: inline-block;" class="img-responsive">
+                        <!-- <a class="vote-txt" href="{% url 'crowdfunding:crowdfunding_voted_proposals' %}" class="border-tab">Voted By Me</a> -->
+                        <!-- <div class="vote-text" style="top:35%; left:25%;"><img src="{% static 'images/admin.jpg' %}" alt=" " width="150" height="150"/></div>  -->
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <img src="../static/images/circle2.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
+                    <!-- <div class="dash-title-2">Number of</div> -->
+                    <!-- <div class="dash-text-2">facilitators</div> -->
                     <div class="dash-number-2">{{ facilitator_count }}</div>
                 </div>  
+
                 <div class="clearfix"></div>
                 <div class="col-md-6 text-center">
-                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" style="display: inline-block;" class="img-responsive">
                     <div class="dash-title-3">Number of</div>
                     <a class="dash-text-3" href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" class="border-tab">Active Proposals</a>
                     <div class="dash-number-3">{{ latest_len }}</div>
                 </div>  
                 <div>
                 <div class="col-md-6 text-center">
-                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" style="display: inline-block;" class="img-responsive">
                     <div class="dash-title-4">Number of</div>
                     <a class="dash-text-4" href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" class="border-tab">Closed Proposals</a>
                     <div class="dash-number-4">{{ closed_len }}</div>
                 </div>
-                <div class="img-vote" style="top:91%;">
-                    <img src="../static/images/point.png" alt="Smiley face" height="353" width="293" class="img-responsive">
-                    <!-- <a class="vote-txt" href="{% url 'crowdfunding:crowdfunding_voted_proposals' %}" class="border-tab">Voted By Me</a> -->
-                    <div class="vote-text" style="top:35%; left:25%;"><img src="{% static 'images/admin.jpg' %}" alt=" " width="150" height="150"/></div> 
-                </div>
-                </div>
+                <div class="clearfix"></div>
+               
             {% endif %}
             {% if user.user_extented.user_type == 'FR' %}
-                <div class="img-vote" style="top:46%; z-index: 111;">
-                    <img src="../static/images/vote.png" alt="Smiley face" height="353" width="293" class="img-responsive">
-                    <div class="vote-txt" style="top:27%; left:12%; font-size: 24px;" class="border-tab">Number of Members</div>
-                    <div class="vote-text" style="top:40%; left:48%">{{ member_count }}</div> 
-                </div>
-
+                <div class="col-md-12 text-center" style="top:46%; z-index: 111;">
+                    <img src="../static/images/vote.png" alt="Smiley face" height="353" style="display: inline-block;" class="img-responsive">
+                    <div class="vote-txt vote-f1" style="top:34%; font-size: 20px;" class="border-tab">Number of Members</div>
+                    <div class="vote-text" style="top:44%; left:49%">{{ member_count }}</div> 
+                </div> 
                 <div class="clearfix"></div>
                 <div class="col-md-6 text-center">
-                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" style="display: inline-block;" class="img-responsive">
                     <div class="dash-title-3">Number of</div>
                     <a class="dash-text-3" href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" class="border-tab">Active Proposals</a>
                     <div class="dash-number-3">{{ latest_len }}</div>
-                </div>  
+                </div> 
+                
                 <div class="col-md-6 text-center">
-                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" style="display: inline-block;" class="img-responsive">
                     <div class="dash-title-4">Number of</div>
                     <a class="dash-text-4" href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" class="border-tab">Closed Proposals</a>
                     <div class="dash-number-4">{{ closed_len }}</div>
@@ -175,23 +185,25 @@
             {% endif %}
             {% if user.user_extented.user_type == 'MR' %}
                 <div class="clearfix"></div>
+                <div class="col-md-12 text-center">
+                    <img src="../static/images/vote.png" alt="Smiley face" height="353" style="display: inline-block;" class="img-responsive">
+                    <a class="vote-txt" href="{% url 'crowdfunding:crowdfunding_voted_proposals' %}" class="border-tab">Voted By Me</a>
+                    <div class="vote-text" style="top:46%">{{ voted_by_me_count }}</div>
+                <!--     <body style="margin: 0px;"><img style="-webkit-user-select: none" src="http://www.clipartsmania.com/gif/arrows_gif/arrows_buttom_animation_clipart.gif"></body> -->
+                </div>
                 <div class="col-md-6 text-center">
-                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <img src="../static/images/new-proposal-left.png" alt="Smiley face" height="207" style="display: inline-block;" class="img-responsive">
                     <div class="dash-title-3">Number of</div>
                     <a class="dash-text-3" href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" class="border-tab">Active Proposals</a>
                     <div class="dash-number-3">{{ latest_len }}</div>
                 </div>  
                 <div class="col-md-6 text-center">
-                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" width="100%" class="img-responsive">
+                    <img src="../static/images/closed-proposal-right.png" alt="Smiley face" height="207" style="display: inline-block;" class="img-responsive">
                     <div class="dash-title-4">Number of</div>
                     <a class="dash-text-4" href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" class="border-tab">Closed Proposals</a>
                     <div class="dash-number-4">{{ closed_len }}</div>
                 </div>
-                <div class="img-vote" style="top:46%">
-                    <img src="../static/images/vote.png" alt="Smiley face" height="353" width="293" class="img-responsive">
-                    <a class="vote-txt" style="top:30%" href="{% url 'crowdfunding:crowdfunding_voted_proposals' %}" class="border-tab">Voted By Me</a>
-                    <div class="vote-text" style="top:42%">{{ voted_by_me_count }}</div> 
-                </div>
+                
             {% endif %}
         </div>
     </div>
