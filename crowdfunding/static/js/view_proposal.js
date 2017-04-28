@@ -13,6 +13,7 @@ jQuery(document).ready(function($) {
                 if (data.success) {
                     $("#VoteBtn").html(data.upvote);
                     $("#VoteBtnDown").html(data.downvote);
+                    location.reload(true);
                 }
             }
         });
@@ -31,6 +32,7 @@ jQuery(document).ready(function($) {
                 if (data.success) {
                     $("#VoteBtn").html(data.upvote);
                     $("#VoteBtnDown").html(data.downvote);
+                    location.reload(true);
                 }
             }
         });
@@ -46,11 +48,29 @@ jQuery(document).ready(function($) {
             },
             dataType: 'json',
             success: function (data) {
+                location.reload(true);
                 var Web3 = require('web3');
                 var web3 = new Web3();
-                web3.setProvider(new web3.providers.HttpProvider('http://ingethfyi.southindia.cloudapp.azure.com:8545'));
-                var tx = {from: web3.eth.coinbase, to: '0xe2F2f455aC4D4a81e0e6aAc4505BA8A05c40A243', value: web3.toWei(data.amount, "ether")}
+//                web3.setProvider(new web3.providers.HttpProvider('http://ingethfyi.southindia.cloudapp.azure.com:8545'));
+                web3.setProvider(new web3.providers.HttpProvider('http://ingethzsz.eastasia.cloudapp.azure.com:8545'));
+                var tx = {from: web3.eth.coinbase, to: '0x97075926C58DCb09B67DeB9D208F7ddaf0947383', value: web3.toWei(data.amount, "ether")}
                 web3.eth.sendTransaction(tx, "Insoftindia@ether");
+
+            }
+        });
+    });
+
+    $("#btn-rejection-proposal").click(function () {
+        var post_id = $(this).attr('data-post-id');
+        $.ajax({
+            url: '/crowdfunding/rejection_proposal/',
+            data: {
+                'post_id': post_id,
+                'user_id': '1'
+            },
+            dataType: 'json',
+            success: function (data) {
+                location.reload(true);
             }
         });
     });

@@ -40,9 +40,25 @@
                 <button type="button" id="VoteBtnDown" class="btn btn-success btn-size-25 btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
                     {{ post.down_count }}</button>
             </div>
+            <!--{% if user.user_extented.user_type == 'FR' and post.state == 'DT' %}-->
+                <!--<div class="col-md-6 text-right">-->
+                    <!--<a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>-->
+                <!--</div>-->
+            <!--{% endif %}-->
             {% if user.user_extented.user_type == 'FR' and post.state == 'DT' %}
                 <div class="col-md-6 text-right">
-                    <a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>
+                    <button type="button" id='btn-rejection-proposal' class="btn-color" data-post-id="{{ post.id }}">Reject/Close</button>
+                    <button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Accept/Close</button>
+                </div>
+            {% endif %}
+            {% if user.user_extented.user_type == 'FR' and post.state != 'DT' %}
+                <div class="col-md-5 text-right">
+                    {% if post.state == 'CD' %}
+                    <strong>Accept / Closed</strong>
+                    {% endif %}
+                    {% if post.state == 'RJ' %}
+                    <strong>Reject / Closed</strong>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>

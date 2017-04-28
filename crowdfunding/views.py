@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from .models import CrowdFundingMemberGroup, CrowdFundingMemberGroup, UserExtendedForFunding, CrowdFundingPostProposal, CrowdFundingProposalVoting, Comment
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
-from .forms import CrowdFundingPostProposalForm
+from .forms import CrowdFundingPostProposalForm, UserForm
 from django.shortcuts import redirect, get_object_or_404, render
 from django.utils import timezone
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponsePermanentRedirect
 from django.db.models import Sum
 # from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
@@ -12,6 +12,7 @@ from login.forms import RegistrationForm
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.contrib.contenttypes.models import ContentType
+from django.forms.models import inlineformset_factory
 
 # Create your views here.
 
@@ -19,7 +20,8 @@ from django.contrib.contenttypes.models import ContentType
 def crowdfunding(request):
     group_type = CrowdFundingMemberGroup.objects.all()
     latest_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='DT').order_by('published_datetime')
-    closed_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
+    # closed_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
+    closed_posts = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now()).exclude(state='DT').order_by('published_datetime')
     closed_len = len(closed_posts)
     latest_len = len(latest_posts)
     facilitator_count = UserExtendedForFunding.objects.filter(user_type='FR').count()
@@ -57,14 +59,22 @@ def latest_crowdfunding_proposals(request):
 
 def voted_crowdfunding_proposals(request):
     voted_posts_list = CrowdFundingProposalVoting.objects.filter(author=request.user)
-    self_user_proposal = [x.proposal_id for x in voted_posts_list]
+    self_user_proposal_list = [x.proposal_id for x in voted_posts_list]
+    try:
+        page = request.GET.get('page', 1)
+    except PageNotAnInteger:
+        page = 1
+
+    voted_paginator = Paginator(self_user_proposal_list, 4, request=request)
+    self_user_proposal = voted_paginator.page(page)
     return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':self_user_proposal, 'title':'Voted Proposals'})
 
 @login_required(login_url='/')
 def closed_crowdfunding_proposals(request):
 
     group_type = CrowdFundingMemberGroup.objects.all()
-    closed_posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
+    # closed_posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now(), state='CD').order_by('published_datetime')
+    closed_posts_list = CrowdFundingPostProposal.objects.filter(published_datetime__lte=timezone.now()).exclude(state='DT').order_by('published_datetime')
     try:
         page = request.GET.get('page', 1)
     except PageNotAnInteger:
@@ -205,6 +215,17 @@ def close_proposal(request):
     return JsonResponse(data)
 
 @login_required(login_url='/')
+def rejection_proposal(request):
+    data = {}
+    user_id = request.GET.get('user_id', None)
+    post_id = request.GET.get('post_id', None)
+    proposal = CrowdFundingPostProposal.objects.filter(pk=post_id)
+    proposal.update(state='RJ')
+    data['success'] = True
+    return JsonResponse(data)
+
+
+@login_required(login_url='/')
 def post_comment(request):
     post_id = request.GET.get('post_id', None)
     comment_text = request.GET.get('comment_text', None)
@@ -229,3 +250,55 @@ def get_user_private_key(request):
 def make_history(request):
     data = serializers.serialize('json', LogEntry.objects.all(), fields=('action_time', 'object_repr', 'change_message',))
     return JsonResponse(({'results': data}))
+
+@login_required(login_url='/')
+def crowdfunding_facilitators(request):
+    facilitator_ids = UserExtendedForFunding.objects.filter(user_type='FR').values('user_id')
+    facilitators = User.objects.filter(pk__in=facilitator_ids)
+    return render(request, 'crowdfunding/crowdfunding_users.html', {'title':"Facilitators",'users':facilitators})
+
+@login_required(login_url='/')
+def crowdfunding_members(request):
+    member_ids = UserExtendedForFunding.objects.filter(user_type='MR').values('user_id')
+    members = User.objects.filter(pk__in=member_ids)
+    return render(request, 'crowdfunding/crowdfunding_users.html', {'title':"Members",'users':members})
+
+@login_required(login_url='/')
+def crowdfunding_user_details(request, pk):
+    user_details = get_object_or_404(User, pk=pk)
+    return render(request, 'crowdfunding/crowdfunding_user_details.html', {'user_details':user_details})
+
+@login_required(login_url='/')
+def crowdfunding_edit_user(request, pk):
+    user = User.objects.get(pk=pk)
+
+    # prepopulate UserProfileForm with retrieved user values from above.
+    user_form = UserForm(instance=user)
+
+    # The sorcery begins from here, see explanation below
+    UserInlineFormset = inlineformset_factory(User, UserExtendedForFunding, fields=('user_image', 'ether_account_private_key'))
+    UserInlineFormset(instance=user)
+
+    if request.user.is_authenticated():
+        if request.method == "POST":
+            user_form = UserForm(request.POST, request.FILES, instance=user)
+            formset = UserInlineFormset(request.POST, request.FILES, instance=user)
+
+            if user_form.is_valid():
+                created_user = user_form.save(commit=False)
+                formset = UserInlineFormset(request.POST, request.FILES, instance=created_user)
+
+                if formset.is_valid():
+                    user.set_password(request.POST.get('password'))
+                    created_user.save()
+                    formset.save()
+                    return redirect('crowdfunding:crowdfunding_user_details', pk=user.pk)
+        else:
+            user_form = user_form
+            formset = UserInlineFormset(instance=user)
+        return render(request, "crowdfunding/crowdfunding_edit_user_details.html", {
+            "noodle": pk,
+            "noodle_form": user_form,
+            "formset": formset,
+        })
+

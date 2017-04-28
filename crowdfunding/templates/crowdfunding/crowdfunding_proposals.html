@@ -79,6 +79,16 @@
                                                         {{ post.down_count }}</button>
                                                 </div>
                                             </div>
+                                            {% if user.user_extented.user_type == 'FR' and post.state != 'DT' %}
+                                                <div class="col-md-4">
+                                                    {% if post.state == 'CD' %}
+                                                        <strong>Accept / Closed</strong>
+                                                    {% endif %}
+                                                    {% if post.state == 'RJ' %}
+                                                        <strong>Reject / Closed</strong>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

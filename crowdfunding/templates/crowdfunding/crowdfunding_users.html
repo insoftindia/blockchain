@@ -1,0 +1,32 @@
+{% extends 'crowdfunding/crowdfunding.html' %}
+
+{% load staticfiles %}
+{% block body_content %}
+<!-- Main Content -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ title }}</h1>
+        </div>
+        <div class="clearfix"></div>
+        <hr/>
+        {% for user in users %}
+            <div class="col-md-4" style="margin-bottom:15px;">
+                <div class="col-md-3">
+                    {% if user.user_extented.user_image %}
+                        <img src="{{ user.user_extented.user_image.url }}" alt="Person" width="96" height="96" style="border-radius: 50px;"/>
+                    {% else %}
+                        <img src="{% static 'images/img_avatar.png' %}" alt="Person" width="96" height="96" style="border-radius: 50px;"/>
+                    {% endif %}
+                </div>
+                <div class="col-md-9">
+                    <a href="{% url 'crowdfunding:crowdfunding_user_details' pk=user.pk %}"><h4>{{ user.username }}</h4></a>
+                    <h4>{{ user.email }}</h4>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<hr>
+
+{% endblock %}

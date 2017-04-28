@@ -32,7 +32,8 @@ class CrowdFundingProposalSettings(models.Model):
 
 class CrowdFundingPostProposal(models.Model):
 
-    STATE = [('DT', "Draft"), ('CD', "Closed"),]
+    # STATE = [('DT', "Draft"), ('CD', "Closed"),]
+    STATE = [('DT', "Draft"), ('CD', "Closed"), ('RJ', "Rejection"),]
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     text = models.TextField()

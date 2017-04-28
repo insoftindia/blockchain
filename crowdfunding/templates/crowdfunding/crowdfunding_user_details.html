@@ -1,0 +1,50 @@
+{% extends 'crowdfunding/crowdfunding.html' %}
+
+{% load staticfiles %}
+{% block body_content %}
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <h1>User</h1>
+        </div>
+        <div class="clearfix"></div>
+        <hr/>
+        <div class="col-md-4 col-md-offset-2">
+            {% if user_details.user_extented.user_image %}
+                <img src="{{ user_details.user_extented.user_image.url }}"  alt="Person" width="100%" height="350" style="border-radius: 50px;"/>
+            {% else %}
+                <img src="{% static 'images/img_avatar.png' %}" alt="Person" width="100%" height="350" style="border-radius: 50px;"/>
+            {% endif %}
+
+        </div>
+        <div class="col-md-4">
+            {% if user.is_superuser %}
+                <div class="text-right">
+                    <a class="btn btn-default" href="{% url 'crowdfunding:crowdfunding_edit_user' pk=user_details.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </div>
+            {% endif %}
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter Name" value="{{ user_details.username }}" readonly>
+            </div>
+             <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter E-mail" value="{{ user_details.email }}" readonly>
+            </div>
+              <!--<div class="form-group">-->
+                <!--<label for="pwd">Password:</label>-->
+                <!--<input type="password" class="form-control" id="pwd">-->
+              <!--</div>-->
+            {% if user.is_superuser %}
+             <div class="form-group">
+              <label for="key">Personal key:</label>
+              <input type="text" class="form-control" id="key" placeholder="Personal Key" value="{{ user_details.user_extented.ether_account_private_key }}" readonly>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<hr>
+
+{% endblock %}

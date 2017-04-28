@@ -1,0 +1,48 @@
+{% extends 'crowdfunding/crowdfunding.html' %}
+
+{% load staticfiles %}
+{% block body_content %}
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <form action="." method="POST">
+            {% csrf_token %}
+            <div class="col-md-4 col-md-offset-4">
+                <div class="form-group input-style">
+                    {{ noodle_form.username.errors }}
+                    <label for="{{ noodle_form.username.id_for_label }}">Username:</label>
+                    {{ noodle_form.username }}
+                </div>
+                <div class="form-group input-style">
+                    {{ noodle_form.email.errors }}
+                    <label for="{{ noodle_form.email.id_for_label }}">Email:</label>
+                    {{ noodle_form.email }}
+                </div>
+                <div class="form-group input-style">
+                    {{ noodle_form.password.errors }}
+                    <label for="{{ noodle_form.password.id_for_label }}">Password:</label>
+                    {{ noodle_form.password }}
+                    <!--<input type="password" class="form-control" id="pwd">-->
+                </div>
+                {{ formset.management_form }}
+                {% for form_set in formset %}
+                    {{ form_set.id }}
+                    <div class="form-group input-style">
+                        {{ form_set.ether_account_private_key.errors }}
+                        <label for="{{ form_set.ether_account_private_key.id_for_label }}">Private Key:</label>
+                        {{ form_set.ether_account_private_key }}
+                    </div>
+                    <!--<div class="form-group">-->
+                        <!--{{ form_set.user_type.errors }}-->
+                        <!--<label for="{{ form_set.user_type.id_for_label }}">User Type:</label>-->
+                        <!--{{ form_set.user_type }}-->
+                    <!--</div>-->
+                {% endfor %}
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<hr>
+
+{% endblock %}

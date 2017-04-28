@@ -125,7 +125,7 @@
         <div class="row">
             {% if user.is_superuser %}
                 <div class="col-md-4 text-center" style="left:6px;">
-                    <img src="../static/images/circle1.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
+                    <a href="{% url 'crowdfunding:crowdfunding_members' %}"><img src="../static/images/circle1.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;"></a>
                     
                     <!-- <div class="dash-title-1">Number of</div> -->
                     <!-- <div class="dash-text-1">Members</div> -->
@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-center">
-                    <img src="../static/images/circle2.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;">
+                    <a href="{% url 'crowdfunding:crowdfunding_facilitators' %}"><img src="../static/images/circle2.png" alt="Smiley face" height="349" width="345" class="img-responsive" style="display:inline-block;"></a>
                     <!-- <div class="dash-title-2">Number of</div> -->
                     <!-- <div class="dash-text-2">facilitators</div> -->
                     <div class="dash-number-2">{{ facilitator_count }}</div>
@@ -164,7 +164,7 @@
             {% endif %}
             {% if user.user_extented.user_type == 'FR' %}
                 <div class="col-md-12 text-center" style="top:46%; z-index: 111;">
-                    <img src="../static/images/vote.png" alt="Smiley face" height="353" style="display: inline-block;" class="img-responsive">
+                    <a href="{% url 'crowdfunding:crowdfunding_members' %}"><img src="../static/images/vote.png" alt="Smiley face" height="353" style="display: inline-block;" class="img-responsive"></a>
                     <div class="vote-txt vote-f1" style="top:34%; font-size: 20px;" class="border-tab">Number of Members</div>
                     <div class="vote-text" style="top:44%; left:49%">{{ member_count }}</div> 
                 </div> 
